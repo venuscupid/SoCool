@@ -1,1 +1,1 @@
-This is project, code name: SoCool
+This is project, code name: SoCool.
