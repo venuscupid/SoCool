@@ -140,7 +140,7 @@ public class DiskCrawler
 	//================== test ============================
 	public static void main(String[] args)
 	{
-		String filePath = "/home/yaoyao/5.Softwares";
+		String filePath = "/home/yaoyao/";
 		
 		DiskCrawler crawler = new DiskCrawler();
 		crawler.initialize(filePath);

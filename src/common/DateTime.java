@@ -7,8 +7,10 @@ public class DateTime
 {
 	/**
 	 * Format of the date time used
+	 * SSS is millisecond
 	 */
-	protected final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd-HH:mm:ss");
+	private final static String strDateFormat = "yyyy.MM.dd-HH:mm:ss::SSS";
+	protected final static SimpleDateFormat dateFormat = new SimpleDateFormat(strDateFormat);
 	
 	public static String getDateTime(long timeMilliSec)
 	{
