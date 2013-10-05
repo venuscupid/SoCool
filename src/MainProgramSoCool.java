@@ -9,7 +9,7 @@
  * HISTORY:
  * 		2013.10.4	created
  */
-public class MainProgram
+public class MainProgramSoCool
 {
 	public static String HELP_MESSAGE = "Usage:\t" + "java MainProgram <param>";
 
