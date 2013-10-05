@@ -120,7 +120,7 @@ public class DiskCrawler
 		
 		stopTime = System.currentTimeMillis();
 		
-		stdLogger.printCrawlerLog("Number of dirs: " + dirCount);
+		stdLogger.printCrawlerLog("Number of dirs (include self): " + dirCount);
 		stdLogger.printCrawlerLog("Number of files: " + fileCount);
 		stdLogger.printCrawlerLog("Stop at: " + DateTime.getDateTime(stopTime));
 		return true;
@@ -140,7 +140,7 @@ public class DiskCrawler
 	//================== test ============================
 	public static void main(String[] args)
 	{
-		String filePath = "/home/yaoyao/";
+		String filePath = "/home/yaoyao/test";
 		
 		DiskCrawler crawler = new DiskCrawler();
 		crawler.initialize(filePath);
