@@ -6,13 +6,20 @@ package log;
 
 /**
  * This is in charge of output log message to standard IO.
+ * 
+ * <p>Use <b>Initialization-on-demand holder idiom</b> to implement <b>thread-safe lazy init Singleton</b>
  */
 public class StandardLogger
 {
 	/**
-	 * the instance of the standard logger
+	 * Constructor, but is not visible to public
 	 */
-	private static StandardLogger logger = null;
+	private StandardLogger(){}
+	
+	private static class LazyHolder
+	{
+		private static final StandardLogger instance = new StandardLogger();
+	}
 	
 	/**
 	 * Returns instance of StandardLogger.
@@ -21,17 +28,7 @@ public class StandardLogger
 	 */
 	public static StandardLogger getInstance()
 	{
-		if(logger == null)
-			logger = new StandardLogger();
-		return logger;
-	}
-	
-	/**
-	 * Constructs logger to standard IO.
-	 */
-	private StandardLogger()
-	{
-		System.out.println("");
+		return LazyHolder.instance;	// only getInstance() is called, the singleton instance is created
 	}
 	
 	/**

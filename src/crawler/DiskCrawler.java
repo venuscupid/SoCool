@@ -2,8 +2,8 @@ package crawler;
 
 import java.io.File;
 
+import os.OSInfo;
 import common.DateTime;
-
 import log.StandardLogger;
 
 /**
@@ -61,6 +61,7 @@ public class DiskCrawler
 		
 		startTime = System.currentTimeMillis();
 		
+		stdLogger.printCrawlerLog("Operating System: " + OSInfo.getOsFullInfo());
 		stdLogger.printCrawlerLog("Start crawling path: " + filePath.getAbsolutePath());
 		stdLogger.printCrawlerLog("Start at: " + DateTime.getDateTime(startTime));
 		
