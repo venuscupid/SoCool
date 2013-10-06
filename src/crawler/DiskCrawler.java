@@ -63,6 +63,8 @@ public class DiskCrawler
 		
 		stdLogger.printCrawlerLog("Operating System: " + OSInfo.getOsFullInfo());
 		stdLogger.printCrawlerLog("Start crawling path: " + filePath.getAbsolutePath());
+		stdLogger.printCrawlerLog("The inner-most dir: " + (filePath.getAbsolutePath().substring(filePath.getAbsolutePath().lastIndexOf(OSInfo.getFileSeparator()))));
+		
 		stdLogger.printCrawlerLog("Start at: " + DateTime.getDateTime(startTime));
 		
 		execute(filePath);

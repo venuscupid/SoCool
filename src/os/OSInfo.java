@@ -8,7 +8,25 @@ package os;
  */
 public class OSInfo
 {
+	/**
+	 * The name of the OS
+	 */
 	private static String osName = System.getProperty("os.name").toLowerCase();
+	
+	/**
+	 * "/" in Unix
+	 */
+	private static String fileSeparator = System.getProperty("file.separator");
+	
+	/**
+	 * ":" in Unix
+	 */
+	private static String pathSeparator = System.getProperty("path.separator");
+	
+	/**
+	 * "\n" in Unix
+	 */
+	private static String lineSeparator = System.getProperty("line.separator");
 	
 	public static String getOsName()
 	{
@@ -47,5 +65,29 @@ public class OSInfo
       
     public static boolean isWindows(){  
         return (osName.indexOf("windows") >= 0);
+    }
+    
+    /**
+	 * "/" in Unix, "\" in Windows
+	 */
+    public static String getFileSeparator()
+    {
+    	return fileSeparator;
+    }
+    
+    /**
+	 * ":" in Unix, ";" in Windows, like in PATH system variable
+	 */
+    public static String getPathSeparator()
+    {
+    	return pathSeparator;
+    }
+    
+    /**
+	 * "\n" in Unix, "\r\n" (CR+LF) in Windows
+	 */
+    public static String getLineSeparator()
+    {
+    	return lineSeparator;
     }
 }
