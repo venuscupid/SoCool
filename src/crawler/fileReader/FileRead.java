@@ -7,8 +7,8 @@ package crawler.fileReader;
 public interface FileRead
 {
 	/**
-	 * read the whole file
-	 * @return the content of the whole file
+	 * read the file
+	 * @return true if read
 	 */
-	public abstract String readAll();
+	public abstract boolean readFile();
 }

@@ -4,6 +4,7 @@ import java.io.File;
 
 import os.OSInfo;
 import common.DateTime;
+import common.FileType;
 import log.StandardLogger;
 
 /**
@@ -11,7 +12,7 @@ import log.StandardLogger;
  * @author yaoyao
  *
  */
-public class DiskCrawler
+public class DiskCrawler extends AbstractCrawler
 {
 	private long startTime;
 	
@@ -27,10 +28,12 @@ public class DiskCrawler
 	
 	StandardLogger stdLogger = StandardLogger.getInstance();
 	
+	FileReaderManager fileReaderManager;
+	
 	
 	public DiskCrawler()
 	{
-		
+		fileReaderManager = FileReaderManager.createManager();
 	}
 	
 	/**
@@ -54,6 +57,7 @@ public class DiskCrawler
 	 * TODO start the thread
 	 * @return
 	 */
+	@Override
 	public boolean start()
 	{
 		if(status != CrawlerStatus.INITIALIZED) return false;	// quit if not initialized
@@ -77,12 +81,13 @@ public class DiskCrawler
 		int i;
 		
 		if(fileDir.isFile()){
-			// stdLogger.printCrawlerLog("file: " + fileDir.getName());
+			stdLogger.printCrawlerLog("file: " + fileDir.getName());
+			stdLogger.printCrawlerLog("-- file type: " + FileType.getFileType(fileDir));
 			fileCount ++;
 		}
 		else if(fileDir.isDirectory()){
 			dirCount ++;
-			// stdLogger.printCrawlerLog("directory: " + fileDir.getPath());
+			stdLogger.printCrawlerLog("directory: " + fileDir.getPath());
 			File[] files = fileDir.listFiles();
 			for(i = 0; i < files.length; i ++)
 				execute(files[i]);
@@ -96,6 +101,7 @@ public class DiskCrawler
 	 * TODO pause the thread
 	 * @return
 	 */
+	@Override
 	public boolean pause()
 	{
 		if(status != CrawlerStatus.RUN) return false;	// quit if not started
@@ -104,6 +110,7 @@ public class DiskCrawler
 		return true;
 	}
 	
+	@Override
 	public boolean resume()
 	{
 		if(status != CrawlerStatus.PAUSED) return false;
@@ -116,6 +123,7 @@ public class DiskCrawler
 	 * TODO stop the thread
 	 * @return
 	 */
+	@Override
 	public boolean stop()
 	{
 		if((status != CrawlerStatus.RUN) && (status != CrawlerStatus.PAUSED)) return false;	// quit if not started or paused
@@ -131,6 +139,7 @@ public class DiskCrawler
 	
 	/**
 	 * Override the finalize()
+	 * TODO
 	 */
 	@Override
 	public void finalize()
@@ -138,6 +147,26 @@ public class DiskCrawler
 		stop();
 	}
 	
+	/**
+	 * restart the crawler
+	 * TODO
+	 */
+	@Override
+	public boolean restart()
+	{
+		if(status == CrawlerStatus.NONE) return false;	// must be initialized first
+		
+		return true;
+	}
+	
+	/**
+	 * When the crawler meets a file, it will (use a new thread FileReader) issue the task of read file and continue crawling
+	 */
+	public boolean readFile(String fileName)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 	//================== test ============================
@@ -150,5 +179,7 @@ public class DiskCrawler
 		crawler.start();
 		crawler.stop();
 	}
+
+	
 
 }

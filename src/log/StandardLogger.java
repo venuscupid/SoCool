@@ -4,6 +4,8 @@
 
 package log;
 
+import common.config.Config;
+
 /**
  * This is in charge of output log message to standard IO.
  * 
@@ -37,6 +39,8 @@ public class StandardLogger
 	 */
 	public void printLog(String msg)
 	{
+		if(!Config.DEBUG_ON) return;
+		
 		System.out.println("GENERAL: " + msg);
 	}
 	
@@ -46,6 +50,8 @@ public class StandardLogger
 	 */
 	public void printError(String err)
 	{
+		if(!Config.DEBUG_ON) return;
+		
 		System.err.println("ERROR: " + err);
 	}
 	
@@ -55,7 +61,11 @@ public class StandardLogger
 	 */
 	public void printCrawlerLog(String msg)
 	{
-		System.out.println("CRAWLER: " + msg);
+		if(!Config.DEBUG_ON) return;
+		
+		synchronized(this){
+			System.out.println("CRAWLER: " + msg);
+		}
 	}
 	
 	/**
@@ -64,7 +74,11 @@ public class StandardLogger
 	 */
 	public void printCrawlerError(String err)
 	{
-		System.err.println("CRAWLER: " + err);
+		if(!Config.DEBUG_ON) return;
+		
+		synchronized(this){
+			System.err.println("CRAWLER: " + err);
+		}
 	}
 	
 	
