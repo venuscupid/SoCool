@@ -15,8 +15,8 @@ public class Debug
 	public static void print(String msg)
 	{
 		StringBuffer message = new StringBuffer();
-		message.append(">>>>> debug >>>>>");
-		message.append(msg).append("\n<<<<< debug end <<<<<\n");
+		message.append(">>>>>>>>>>>>>>> debug >>>>>>>>>>>>>>>\n");
+		message.append(msg).append("\n<<<<<<<<<<<<<<< debug end <<<<<<<<<<<<<<<\n");
 		System.out.println(message.toString());
 	}
 	

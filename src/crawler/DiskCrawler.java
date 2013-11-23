@@ -5,6 +5,7 @@ import java.io.File;
 import os.OSInfo;
 import common.DateTime;
 import common.FileType;
+import common.config.Config;
 import log.StandardLogger;
 
 /**
@@ -236,6 +237,8 @@ public class DiskCrawler extends AbstractCrawler
 	//================== test ============================
 	public static void main(String[] args)
 	{
+		Config.readConfigFile("config.ini");
+		
 		String filePath = "/home/yaoyao/test";
 		
 		DiskCrawler crawler = new DiskCrawler();

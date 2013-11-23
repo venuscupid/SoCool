@@ -6,6 +6,7 @@ package common.config;
 
 import java.io.IOException;
 
+import debug.Debug;
 import log.StandardLogger;
 
 
@@ -107,20 +108,24 @@ public class Config
 	 */
 	private static void fillValues(ConfigReader configReader)
 	{
+		String value_String = "";
+		int value_Int = -1;
+		double value_Double = -1;
+		
 		/*
 		 * =============== Region. Common parameters ==============================================
 		 */
 		// DEBUG_ON
 		if(configReader.hasValue("DEBUG_ON"))
 		{
-			String v = configReader.getString("DEBUG_ON").toLowerCase();
-			if(v.startsWith("true")) {
+			value_Int = configReader.getInt("DEBUG_ON");
+			if(value_Int == 1) {
 				DEBUG_ON = true;
 				stdLogger.printLog("Debug Mode enabled");
 			}
-			else if(v.startsWith("false")) {
+			else if(value_Int == 0) {
 				DEBUG_ON = false;
-				stdLogger.printLog("Debug Mode disabled");
+				Debug.print("Debug Mode disabled, DEBUG_ON：" + value_Int);
 			}
 		}
 		
