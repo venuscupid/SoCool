@@ -42,7 +42,7 @@ public class FileType
 	public static final long HTML = 1001;
 	
 	
-	// ============== pdf files =================
+	// ============== pdf, ps files =================
 	public static final long PDF = 2000;
 	
 	// ============== MS office files =================
@@ -50,15 +50,23 @@ public class FileType
 	
 	public static final long DOCX = 3001;
 	
+	public static final long XLS = 3100;
+	public static final long XLSX = 3101;	// excel file since Office 2007
 	
 	// ============== source code files =================
 	public static final long JAVA = 10000;
 	
+	public static final long C = 10001;
+	public static final long CPP = 10002;
+	public static final long CC = 10003;
+	public static final long H = 10004;
+	
+	public static final long PL = 10005;		// perl
 	
 	
 	/**
 	 * Get the type of the file in the path given
-	 * @param filePath
+	 * @param filePath	the File
 	 * @return the constants standing for the type
 	 */
 	public static synchronized long getFileType(File filePath)
@@ -119,6 +127,14 @@ public class FileType
 		typeMap.put("pdf", PDF);
 		typeMap.put("doc", DOC);
 		typeMap.put("docx", DOCX);
+		typeMap.put("xls", XLS);
+		typeMap.put("xlsx", XLSX);
+		
 		typeMap.put("java", JAVA);
+		typeMap.put("c", C);
+		typeMap.put("cpp", CPP);
+		typeMap.put("cc", CC);
+		typeMap.put("h", H);
+		typeMap.put("pl", PL);
 	}
 }

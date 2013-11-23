@@ -30,8 +30,13 @@ public class StandardLogger
 	 */
 	public static StandardLogger getInstance()
 	{
-		return LazyHolder.instance;	// only getInstance() is called, the singleton instance is created
+		return LazyHolder.instance;	// only when getInstance() is called, the singleton instance is created
 	}
+	
+	public static final String GENERAL = "GENERAL: ";
+	public static final String ERROR = "ERROR: ";
+	public static final String CRAWLER = "CRAWLER: ";
+	public static final String CRAWLER_ERROR = "CRAWLER ERROR !!!: ";
 	
 	/**
 	 * Print general log
@@ -41,7 +46,7 @@ public class StandardLogger
 	{
 		if(!Config.DEBUG_ON) return;
 		
-		System.out.println("GENERAL: " + msg);
+		System.out.println(GENERAL + msg);
 	}
 	
 	/**
@@ -52,7 +57,7 @@ public class StandardLogger
 	{
 		if(!Config.DEBUG_ON) return;
 		
-		System.err.println("ERROR: " + err);
+		System.err.println(ERROR + err);
 	}
 	
 	/**
@@ -64,7 +69,7 @@ public class StandardLogger
 		if(!Config.DEBUG_ON) return;
 		
 		synchronized(this){
-			System.out.println("CRAWLER: " + msg);
+			System.out.println(CRAWLER + msg);
 		}
 	}
 	
@@ -77,7 +82,7 @@ public class StandardLogger
 		if(!Config.DEBUG_ON) return;
 		
 		synchronized(this){
-			System.err.println("CRAWLER: " + err);
+			System.err.println(CRAWLER_ERROR + err);
 		}
 	}
 	

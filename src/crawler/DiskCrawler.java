@@ -18,6 +18,8 @@ public class DiskCrawler extends AbstractCrawler
 	
 	private long stopTime;
 	
+	private String startPath;
+	
 	private File filePath;
 	
 	private long dirCount = 0;
@@ -37,13 +39,34 @@ public class DiskCrawler extends AbstractCrawler
 	}
 	
 	/**
+	 * Set the path for the crawler to start crawling
+	 * @param path name of the file or directory
+	 */
+	public void setStartPath(String path)
+	{
+		startPath = path;
+	}
+	
+	/**
+	 * Determine if the crawler can be initialized.
+	 */
+	@Override
+	public boolean canInitialize()
+	{
+		if(status == CrawlerStatus.NONE) return true;
+		return false;
+	}
+	
+	/**
 	 * Initialize the crawler
-	 * @param fileDirName name of the file or directory
 	 * @return true if the path exists; false otherwise
 	 */
-	public boolean initialize(String path)
+	@Override
+	public boolean initialize()
 	{
-		filePath = new File(path);
+		if(!canInitialize()) return false;
+		
+		filePath = new File(startPath);
 		
 		if (filePath.exists()){
 			status = CrawlerStatus.INITIALIZED;
@@ -54,13 +77,23 @@ public class DiskCrawler extends AbstractCrawler
 	}
 	
 	/**
+	 * Determine if the crawler can start
+	 */
+	@Override
+	public boolean canStart()
+	{
+		if(status == CrawlerStatus.INITIALIZED) return true;
+		return false;
+	}
+	
+	/**
 	 * TODO start the thread
 	 * @return
 	 */
 	@Override
 	public boolean start()
 	{
-		if(status != CrawlerStatus.INITIALIZED) return false;	// quit if not initialized
+		if(!canStart()) return false;	// quit if not initialized
 		status = CrawlerStatus.RUN;
 		
 		startTime = System.currentTimeMillis();
@@ -97,6 +130,13 @@ public class DiskCrawler extends AbstractCrawler
 	}
 	
 	
+	@Override
+	public boolean canPause()
+	{
+		if(status == CrawlerStatus.RUN) return true;
+		return false;
+	}
+	
 	/**
 	 * TODO pause the thread
 	 * @return
@@ -104,19 +144,35 @@ public class DiskCrawler extends AbstractCrawler
 	@Override
 	public boolean pause()
 	{
-		if(status != CrawlerStatus.RUN) return false;	// quit if not started
+		if(!canPause()) return false;	// quit if not RUN
 		status = CrawlerStatus.PAUSED;
 		
 		return true;
 	}
 	
 	@Override
+	public boolean canResume()
+	{
+		if(status == CrawlerStatus.PAUSED) return true;
+		return false;
+	}
+	
+	@Override
 	public boolean resume()
 	{
-		if(status != CrawlerStatus.PAUSED) return false;
+		if(!canResume()) return false;
 		status = CrawlerStatus.RUN;
 		
 		return true;
+	}
+	
+	@Override
+	public boolean canStop()
+	{
+		if(status == CrawlerStatus.RUN) return true;
+		if(status == CrawlerStatus.PAUSED) return true;
+		
+		return false;
 	}
 	
 	/**
@@ -126,7 +182,7 @@ public class DiskCrawler extends AbstractCrawler
 	@Override
 	public boolean stop()
 	{
-		if((status != CrawlerStatus.RUN) && (status != CrawlerStatus.PAUSED)) return false;	// quit if not started or paused
+		if(!canStop()) return false;	// quit if not started or paused
 		status = CrawlerStatus.STOPPED;
 		
 		stopTime = System.currentTimeMillis();
@@ -147,14 +203,22 @@ public class DiskCrawler extends AbstractCrawler
 		stop();
 	}
 	
+	
+	@Override
+	public boolean canRestart()
+	{
+		if(status == CrawlerStatus.STOPPED) return true;
+		return false;
+	}
+	
 	/**
-	 * restart the crawler
+	 * restart the crawler, only after stopped
 	 * TODO
 	 */
 	@Override
 	public boolean restart()
 	{
-		if(status == CrawlerStatus.NONE) return false;	// must be initialized first
+		if(!canRestart()) return false;	// must be stopped before restart
 		
 		return true;
 	}
@@ -175,7 +239,8 @@ public class DiskCrawler extends AbstractCrawler
 		String filePath = "/home/yaoyao/test";
 		
 		DiskCrawler crawler = new DiskCrawler();
-		crawler.initialize(filePath);
+		crawler.setStartPath(filePath);
+		crawler.initialize();
 		crawler.start();
 		crawler.stop();
 	}
